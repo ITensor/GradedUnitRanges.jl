@@ -5,4 +5,4 @@ LabelledNumbers = "f856a3a6-4152-4ec4-b2a7-02c1a55d7993"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [sources]
-LabelledNumbers = {path = "/Users/mfishman/.julia/dev/LabelledNumbers"} # TODO: Change this to URL.
+LabelledNumbers = {url = "https://github.com/ITensor/LabelledNumbers.jl"}
