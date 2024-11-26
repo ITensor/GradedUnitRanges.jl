@@ -3,8 +3,7 @@ dual(x) = x
 nondual(r::AbstractUnitRange) = r
 isdual(::AbstractUnitRange) = false
 
-using LabelledNumbers:
-  LabelledStyle, IsLabelled, NotLabelled, label, labelled, unlabel
+using LabelledNumbers: LabelledStyle, IsLabelled, NotLabelled, label, labelled, unlabel
 
 dual(i::LabelledInteger) = labelled(unlabel(i), dual(label(i)))
 label_dual(x) = label_dual(LabelledStyle(x), x)
