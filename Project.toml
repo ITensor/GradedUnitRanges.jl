@@ -11,7 +11,7 @@ LabelledNumbers = "f856a3a6-4152-4ec4-b2a7-02c1a55d7993"
 SplitApplyCombine = "03a91e81-4c3e-53e1-a0a4-9c0c8f19dd66"
 
 [sources]
-LabelledNumbers = {path = "/Users/mfishman/.julia/dev/LabelledNumbers"}
+LabelledNumbers = {url = "https://github.com/ITensor/LabelledNumbers.jl"}
 
 [compat]
 Aqua = "0.8.9"

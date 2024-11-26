@@ -19,7 +19,7 @@ jobs:
           julia  -e '
           using Pkg
           # TODO: Delete once they are registered.
-          Pkg.add(url="https://github.com/ITensor/GradedUnitRanges.jl")
+          # Pkg.add(url="https://github.com/ITensor/GradedUnitRanges.jl")
           Pkg.develop(PackageSpec(path=pwd()))
           Pkg.instantiate()
           Pkg.add(PackageSpec(name="Literate"))'
