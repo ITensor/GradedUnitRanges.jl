@@ -3,7 +3,7 @@ dual(x) = x
 nondual(r::AbstractUnitRange) = r
 isdual(::AbstractUnitRange) = false
 
-using NDTensors.LabelledNumbers:
+using LabelledNumbers:
   LabelledStyle, IsLabelled, NotLabelled, label, labelled, unlabel
 
 dual(i::LabelledInteger) = labelled(unlabel(i), dual(label(i)))

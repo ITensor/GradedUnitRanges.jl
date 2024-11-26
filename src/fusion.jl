@@ -45,7 +45,7 @@ function fuse_blocklengths(x::Integer, y::Integer)
   return blockedrange([x * y])
 end
 
-using ..LabelledNumbers: LabelledInteger, label, labelled, unlabel
+using LabelledNumbers: LabelledInteger, label, labelled, unlabel
 function fuse_blocklengths(x::LabelledInteger, y::LabelledInteger)
   # return blocked unit range to keep non-abelian interface
   return blockedrange([labelled(x * y, fuse_labels(label(x), label(y)))])

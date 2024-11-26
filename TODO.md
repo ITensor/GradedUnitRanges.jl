@@ -1,0 +1,3 @@
+- Remove Compat.jl dependency.
+- Reenable tests on Julia 1.10 once dependencies are registered.
+- Change [sources] entries from paths to URLs.
