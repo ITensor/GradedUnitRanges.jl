@@ -97,24 +97,24 @@ end
 Base.axes(a::GradedUnitRangeDual) = axes(nondual(a))
 
 using BlockArrays: BlockArrays, Block, BlockSlice
-using NDTensors.LabelledNumbers: LabelledUnitRange
+using LabelledNumbers: LabelledUnitRange
 function BlockArrays.BlockSlice(b::Block, a::LabelledUnitRange)
   return BlockSlice(b, unlabel(a))
 end
 
 using BlockArrays: BlockArrays, BlockSlice
-using NDTensors.GradedAxes: GradedUnitRangeDual, dual
+using GradedUnitRanges: GradedUnitRangeDual, dual
 function BlockArrays.BlockSlice(b::Block, r::GradedUnitRangeDual)
   return BlockSlice(b, dual(r))
 end
 
-using NDTensors.LabelledNumbers: LabelledNumbers, LabelledUnitRange, label
+using LabelledNumbers: LabelledNumbers, LabelledUnitRange, label
 function Base.iterate(a::GradedUnitRangeDual, i)
   i == last(a) && return nothing
   return dual.(iterate(nondual(a), i))
 end
 
-using NDTensors.LabelledNumbers: LabelledInteger, label, labelled, unlabel
+using LabelledNumbers: LabelledInteger, label, labelled, unlabel
 using BlockArrays: BlockArrays, blockaxes, blocklasts, combine_blockaxes, findblock
 BlockArrays.blockaxes(a::GradedUnitRangeDual) = blockaxes(nondual(a))
 BlockArrays.blockfirsts(a::GradedUnitRangeDual) = label_dual.(blockfirsts(nondual(a)))

@@ -3,8 +3,8 @@ using Test: @test, @testset
 
 using BlockArrays: blocklength, blocklengths
 
-using NDTensors.GradedAxes:
-  GradedAxes,
+using GradedUnitRanges:
+  GradedUnitRanges,
   GradedOneTo,
   OneToOne,
   dual,
@@ -15,17 +15,17 @@ using NDTensors.GradedAxes:
   isdual,
   tensor_product
 
-using NDTensors.LabelledNumbers: labelled_isequal
+using LabelledNumbers: labelled_isequal
 
 struct U1
   n::Int
 end
-GradedAxes.dual(c::U1) = U1(-c.n)
+GradedUnitRanges.dual(c::U1) = U1(-c.n)
 Base.isless(c1::U1, c2::U1) = c1.n < c2.n
-GradedAxes.fuse_labels(x::U1, y::U1) = U1(x.n + y.n)
+GradedUnitRanges.fuse_labels(x::U1, y::U1) = U1(x.n + y.n)
 
-@testset "GradedAxes.tensor_product" begin
-  GradedAxes.fuse_labels(x::String, y::String) = x * y
+@testset "GradedUnitRanges.tensor_product" begin
+  GradedUnitRanges.fuse_labels(x::String, y::String) = x * y
 
   g0 = OneToOne()
   @test labelled_isequal(g0, g0)
@@ -45,7 +45,7 @@ GradedAxes.fuse_labels(x::U1, y::U1) = U1(x.n + y.n)
   @test blocklength(c) == 8
 end
 
-@testset "GradedAxes.fusion_product" begin
+@testset "GradedUnitRanges.fusion_product" begin
   g0 = OneToOne()
   @test labelled_isequal(fusion_product(g0, g0), g0)
 

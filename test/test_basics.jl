@@ -12,9 +12,9 @@ using BlockArrays:
   blocks,
   combine_blockaxes,
   mortar
-using NDTensors.GradedAxes:
+using GradedUnitRanges:
   GradedOneTo, GradedUnitRange, OneToOne, blocklabels, gradedrange, space_isequal
-using NDTensors.LabelledNumbers:
+using LabelledNumbers:
   LabelledUnitRange, islabelled, label, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
 
@@ -33,7 +33,7 @@ using Test: @test, @test_broken, @testset
   @test !labelled_isequal(1:2, a0)
 end
 
-@testset "GradedAxes basics" begin
+@testset "GradedUnitRanges basics" begin
   a0 = OneToOne()
   for a in (
     blockedrange([labelled(2, "x"), labelled(3, "y")]),

@@ -1,4 +1,4 @@
-module GradedAxes
+module GradedUnitRanges
 include("blockedunitrange.jl")
 include("gradedunitrange.jl")
 include("dual.jl")

@@ -13,9 +13,9 @@ using BlockArrays:
   findblock,
   mortar,
   combine_blockaxes
-using NDTensors.GradedAxes:
+using GradedUnitRanges:
+  GradedUnitRanges,
   AbstractGradedUnitRange,
-  GradedAxes,
   GradedUnitRangeDual,
   LabelledUnitRangeDual,
   OneToOne,
@@ -28,13 +28,13 @@ using NDTensors.GradedAxes:
   gradedrange,
   isdual,
   nondual
-using NDTensors.LabelledNumbers:
+using LabelledNumbers:
   LabelledInteger, LabelledUnitRange, label, label_type, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
 struct U1
   n::Int
 end
-GradedAxes.dual(c::U1) = U1(-c.n)
+GradedUnitRanges.dual(c::U1) = U1(-c.n)
 Base.isless(c1::U1, c2::U1) = c1.n < c2.n
 
 @testset "AbstractUnitRange" begin
