@@ -17,6 +17,11 @@ blocklabels(la::LabelledUnitRangeDual) = [label(la)]
 LabelledNumbers.label(a::LabelledUnitRangeDual) = dual(label(nondual(a)))
 LabelledNumbers.unlabel(a::LabelledUnitRangeDual) = unlabel(nondual(a))
 LabelledNumbers.LabelledStyle(::LabelledUnitRangeDual) = IsLabelled()
+function LabelledNumbers.label_type(
+  ::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
+) where {NondualUnitRange}
+  return label_type(NondualUnitRange)
+end
 
 for f in [:first, :getindex, :last, :length, :step]
   @eval Base.$f(a::LabelledUnitRangeDual, args...) =

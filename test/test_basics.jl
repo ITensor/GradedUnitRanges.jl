@@ -13,7 +13,13 @@ using BlockArrays:
   combine_blockaxes,
   mortar
 using GradedUnitRanges:
-  GradedOneTo, GradedUnitRange, OneToOne, blocklabels, gradedrange, space_isequal
+  GradedOneTo,
+  GradedUnitRange,
+  OneToOne,
+  blocklabels,
+  gradedrange,
+  sector_type,
+  space_isequal
 using LabelledNumbers:
   LabelledUnitRange, islabelled, label, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
@@ -41,6 +47,7 @@ end
     gradedrange(["x" => 2, "y" => 3]),
   )
     @test a isa GradedOneTo
+    @test sector_type(a) === String
     @test labelled_isequal(a, a)
     @test !labelled_isequal(a0, a)
     @test !labelled_isequal(a, a0)

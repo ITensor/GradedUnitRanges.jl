@@ -90,6 +90,10 @@ Base.eltype(::Type{<:GradedUnitRange{T}}) where {T} = T
 LabelledNumbers.label_type(g::AbstractGradedUnitRange) = label_type(typeof(g))
 LabelledNumbers.label_type(T::Type{<:AbstractGradedUnitRange}) = label_type(eltype(T))
 
+sector_type(x) = sector_type(typeof(x))
+sector_type(T::Type) = error("Not implemented")
+sector_type(T::Type{<:AbstractUnitRange}) = label_type(T)
+
 function gradedrange(lblocklengths::AbstractVector{<:LabelledInteger})
   brange = blockedrange(unlabel.(lblocklengths))
   lblocklasts = labelled.(blocklasts(brange), label.(lblocklengths))
