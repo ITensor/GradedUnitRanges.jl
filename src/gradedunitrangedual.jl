@@ -19,12 +19,10 @@ dual_type(T::Type{<:GradedUnitRangeDual}) = nondual_type(T)
 function dual_type(type::Type{<:AbstractGradedUnitRange{T,BlockLasts}}) where {T,BlockLasts}
   return GradedUnitRangeDual{T,BlockLasts,type}
 end
-function LabelledNumbers.label_type(
-    type::Type{<:GradedUnitRangeDual}
-  )
-    # `dual_type` right now doesn't do anything but anticipates defining `SectorDual`.
-    return dual_type(label_type(nondual_type(type)))
-  end
+function LabelledNumbers.label_type(type::Type{<:GradedUnitRangeDual})
+  # `dual_type` right now doesn't do anything but anticipates defining `SectorDual`.
+  return dual_type(label_type(nondual_type(type)))
+end
 
 ## TODO: Define this to instantiate a dual unit range.
 ## materialize_dual(a::GradedUnitRangeDual) = materialize_dual(nondual(a))
