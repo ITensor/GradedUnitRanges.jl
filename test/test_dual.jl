@@ -23,10 +23,12 @@ using GradedUnitRanges:
   blockmergesortperm,
   blocksortperm,
   dual,
+  dual_type,
   flip,
   gradedrange,
   isdual,
   nondual,
+  nondual_type,
   space_isequal,
   sector_type
 using LabelledNumbers:
@@ -94,6 +96,11 @@ end
   @test dual(lad) === la
   @test label_type(lad) === U1
   @test sector_type(lad) === U1
+
+  @test dual_type(la) === typeof(lad)
+  @test dual_type(lad) === typeof(la)
+  @test nondual_type(lad) === typeof(la)
+  @test nondual_type(la) === typeof(la)
 
   @test iterate(lad) == (1, 1)
   @test iterate(lad) == (1, 1)
@@ -166,6 +173,11 @@ end
     @test space_isequal(ad, ad)
     @test !space_isequal(a, ad)
     @test !space_isequal(ad, a)
+
+    @test dual_type(a) === typeof(ad)
+    @test dual_type(ad) === typeof(a)
+    @test nondual_type(ad) === typeof(a)
+    @test nondual_type(a) === typeof(a)
 
     @test isdual(ad)
     @test !isdual(a)

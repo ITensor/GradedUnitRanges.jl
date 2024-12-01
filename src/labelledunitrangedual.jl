@@ -14,13 +14,24 @@ label_dual(::IsLabelled, a::LabelledUnitRangeDual) = dual(label_dual(nondual(a))
 isdual(::LabelledUnitRangeDual) = true
 blocklabels(la::LabelledUnitRangeDual) = [label(la)]
 
+function nondual_type(
+  ::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
+) where {NondualUnitRange}
+  return NondualUnitRange
+end
+dual_type(T::Type{<:LabelledUnitRangeDual}) = nondual_type(T)
+function dual_type(T::Type{<:LabelledUnitRange})
+  return LabelledUnitRangeDual{eltype(T),T}
+end
+
 LabelledNumbers.label(a::LabelledUnitRangeDual) = dual(label(nondual(a)))
 LabelledNumbers.unlabel(a::LabelledUnitRangeDual) = unlabel(nondual(a))
 LabelledNumbers.LabelledStyle(::LabelledUnitRangeDual) = IsLabelled()
 function LabelledNumbers.label_type(
-  ::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
+  type::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
 ) where {NondualUnitRange}
-  return label_type(NondualUnitRange)
+  # `dual_type` right now doesn't do anything but anticipates defining `SectorDual`.
+  return dual_type(label_type(nondual_type(type)))
 end
 
 for f in [:first, :getindex, :last, :length, :step]
