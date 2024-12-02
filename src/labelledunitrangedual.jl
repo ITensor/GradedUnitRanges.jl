@@ -27,9 +27,7 @@ end
 LabelledNumbers.label(a::LabelledUnitRangeDual) = dual(label(nondual(a)))
 LabelledNumbers.unlabel(a::LabelledUnitRangeDual) = unlabel(nondual(a))
 LabelledNumbers.LabelledStyle(::LabelledUnitRangeDual) = IsLabelled()
-function LabelledNumbers.label_type(
-  type::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
-) where {NondualUnitRange}
+function LabelledNumbers.label_type(type::Type{<:LabelledUnitRangeDual})
   # `dual_type` right now doesn't do anything but anticipates defining `SectorDual`.
   return dual_type(label_type(nondual_type(type)))
 end
