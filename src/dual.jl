@@ -8,8 +8,6 @@ dual_type(T::Type) = T
 nondual_type(x) = nondual_type(typeof(x))
 nondual_type(T::Type) = T
 
-using LabelledNumbers: LabelledStyle, IsLabelled, NotLabelled, label, labelled, unlabel
-
 dual(i::LabelledInteger) = labelled(unlabel(i), dual(label(i)))
 label_dual(x) = label_dual(LabelledStyle(x), x)
 label_dual(::NotLabelled, x) = x

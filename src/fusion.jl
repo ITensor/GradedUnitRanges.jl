@@ -1,5 +1,3 @@
-using BlockArrays: AbstractBlockedUnitRange, blocklengths
-
 # https://github.com/ITensor/ITensors.jl/blob/v0.3.57/NDTensors/src/lib/GradedAxes/src/tensor_product.jl
 # https://en.wikipedia.org/wiki/Tensor_product
 # https://github.com/KeitaNakamura/Tensorial.jl
@@ -45,13 +43,11 @@ function fuse_blocklengths(x::Integer, y::Integer)
   return blockedrange([x * y])
 end
 
-using LabelledNumbers: LabelledInteger, label, labelled, unlabel
 function fuse_blocklengths(x::LabelledInteger, y::LabelledInteger)
   # return blocked unit range to keep non-abelian interface
   return blockedrange([labelled(x * y, fuse_labels(label(x), label(y)))])
 end
 
-using BlockArrays: blockedrange, blocks
 function tensor_product(a1::AbstractBlockedUnitRange, a2::AbstractBlockedUnitRange)
   nested = map(Iterators.flatten((Iterators.product(blocks(a1), blocks(a2)),))) do it
     return mapreduce(length, fuse_blocklengths, it)
@@ -65,8 +61,6 @@ function blocksortperm(a::AbstractUnitRange)
   return Block.(sortperm(blocklabels(nondual(a))))
 end
 
-using BlockArrays: Block, BlockVector
-using SplitApplyCombine: groupcount
 # Get the permutation for sorting, then group by common elements.
 # groupsortperm([2, 1, 2, 3]) == [[2], [1, 3], [4]]
 function groupsortperm(v; kwargs...)

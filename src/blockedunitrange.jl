@@ -1,21 +1,3 @@
-using BlockArrays:
-  BlockArrays,
-  AbstractBlockVector,
-  AbstractBlockedUnitRange,
-  Block,
-  BlockIndex,
-  BlockIndexRange,
-  BlockRange,
-  BlockSlice,
-  BlockVector,
-  BlockedOneTo,
-  BlockedUnitRange,
-  BlockedVector,
-  block,
-  blockindex,
-  findblock,
-  findblockindex
-
 # Custom `BlockedUnitRange` constructor that takes a unit range
 # and a set of block lengths, similar to `BlockArray(::AbstractArray, blocklengths...)`.
 function blockedunitrange(a::AbstractUnitRange, blocklengths)

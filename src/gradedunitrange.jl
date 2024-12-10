@@ -1,36 +1,3 @@
-using BlockArrays:
-  BlockArrays,
-  AbstractBlockVector,
-  AbstractBlockedUnitRange,
-  Block,
-  BlockIndex,
-  BlockRange,
-  BlockSlice,
-  BlockVector,
-  BlockedOneTo,
-  BlockedUnitRange,
-  blockedrange,
-  BlockIndexRange,
-  blockfirsts,
-  blockisequal,
-  blocklength,
-  blocklengths,
-  findblock,
-  findblockindex,
-  mortar,
-  sortedunion
-using Compat: allequal
-using FillArrays: Fill
-using LabelledNumbers:
-  LabelledNumbers,
-  LabelledInteger,
-  LabelledUnitRange,
-  label,
-  label_type,
-  labelled,
-  labelled_isequal,
-  unlabel
-
 abstract type AbstractGradedUnitRange{T,BlockLasts} <:
               AbstractBlockedUnitRange{T,BlockLasts} end
 
@@ -71,7 +38,7 @@ blocklabels(r::AbstractUnitRange) = Fill(NoLabel(), blocklength(r))
 blocklabels(la::LabelledUnitRange) = [label(la)]
 
 function LabelledNumbers.labelled_isequal(a1::AbstractUnitRange, a2::AbstractUnitRange)
-# TODO: fix type piracy
+  # TODO: fix type piracy
   return blockisequal(a1, a2) && (blocklabels(a1) == blocklabels(a2))
 end
 

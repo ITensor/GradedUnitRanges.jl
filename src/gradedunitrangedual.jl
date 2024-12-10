@@ -39,8 +39,6 @@ function blockedunitrange_getindices(
   return dual(getindex(nondual(a), indices))
 end
 
-using BlockArrays: Block, BlockIndexRange, BlockRange
-
 function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::Integer)
   return label_dual(getindex(nondual(a), indices))
 end
@@ -111,26 +109,19 @@ end
 
 Base.axes(a::GradedUnitRangeDual) = axes(nondual(a))
 
-using BlockArrays: BlockArrays, Block, BlockSlice
-using LabelledNumbers: LabelledUnitRange
 function BlockArrays.BlockSlice(b::Block, a::LabelledUnitRange)
   return BlockSlice(b, unlabel(a))
 end
 
-using BlockArrays: BlockArrays, BlockSlice
-using GradedUnitRanges: GradedUnitRangeDual, dual
 function BlockArrays.BlockSlice(b::Block, r::GradedUnitRangeDual)
   return BlockSlice(b, dual(r))
 end
 
-using LabelledNumbers: LabelledNumbers, LabelledUnitRange, label
 function Base.iterate(a::GradedUnitRangeDual, i)
   i == last(a) && return nothing
   return dual.(iterate(nondual(a), i))
 end
 
-using LabelledNumbers: LabelledInteger, label, labelled, unlabel
-using BlockArrays: BlockArrays, blockaxes, blocklasts, combine_blockaxes, findblock
 BlockArrays.blockaxes(a::GradedUnitRangeDual) = blockaxes(nondual(a))
 BlockArrays.blockfirsts(a::GradedUnitRangeDual) = label_dual.(blockfirsts(nondual(a)))
 BlockArrays.blocklasts(a::GradedUnitRangeDual) = label_dual.(blocklasts(nondual(a)))
