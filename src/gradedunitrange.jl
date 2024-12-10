@@ -71,6 +71,7 @@ blocklabels(r::AbstractUnitRange) = Fill(NoLabel(), blocklength(r))
 blocklabels(la::LabelledUnitRange) = [label(la)]
 
 function LabelledNumbers.labelled_isequal(a1::AbstractUnitRange, a2::AbstractUnitRange)
+# TODO: fix type piracy
   return blockisequal(a1, a2) && (blocklabels(a1) == blocklabels(a2))
 end
 
