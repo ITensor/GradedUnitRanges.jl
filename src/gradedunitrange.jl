@@ -73,7 +73,9 @@ function BlockArrays.blockedrange(lblocklengths::AbstractVector{<:LabelledIntege
   return gradedrange(lblocklengths)
 end
 
-Base.last(a::AbstractGradedUnitRange) = isempty(a.lasts) ? first(a) - 1 : last(a.lasts)
+function Base.last(a::AbstractGradedUnitRange)
+  return isempty(a.lasts) ? labelled(first(a) - 1, label(first(a))) : last(a.lasts)
+end
 
 function gradedrange(lblocklengths::AbstractVector{<:Pair{<:Any,<:Integer}})
   return gradedrange(labelled.(last.(lblocklengths), first.(lblocklengths)))
