@@ -14,7 +14,6 @@ blocklabels(la::LabelledUnitRangeDual) = [label(la)]
 map_blocklabels(f, la::LabelledUnitRange) = labelled(unlabel(la), f(label(la)))
 map_blocklabels(f, lad::LabelledUnitRangeDual) = dual(map_blocklabels(f, nondual(lad)))
 
-
 function nondual_type(
   ::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}
 ) where {NondualUnitRange}
