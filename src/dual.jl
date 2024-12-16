@@ -9,9 +9,4 @@ nondual_type(x) = nondual_type(typeof(x))
 nondual_type(T::Type) = T
 
 dual(i::LabelledInteger) = labelled(unlabel(i), dual(label(i)))
-label_dual(x) = label_dual(LabelledStyle(x), x)
-label_dual(::NotLabelled, x) = x
-label_dual(::IsLabelled, x) = labelled(unlabel(x), dual(label(x)))
-
-flip(a::AbstractUnitRange) = dual(label_dual(a))
-flip(g::AbstractGradedUnitRange) = dual(gradedrange(label_dual.(blocklengths(g))))
+flip(a::AbstractUnitRange) = dual(map_blocklabels(dual, a))

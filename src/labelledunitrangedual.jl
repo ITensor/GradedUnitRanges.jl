@@ -8,9 +8,12 @@ end
 dual(a::LabelledUnitRange) = LabelledUnitRangeDual(a)
 nondual(a::LabelledUnitRangeDual) = a.nondual_unitrange
 dual(a::LabelledUnitRangeDual) = nondual(a)
-label_dual(::IsLabelled, a::LabelledUnitRangeDual) = dual(label_dual(nondual(a)))
 isdual(::LabelledUnitRangeDual) = true
 blocklabels(la::LabelledUnitRangeDual) = [label(la)]
+
+map_blocklabels(f, la::LabelledUnitRange) = labelled(unlabel(la), f(label(la)))
+map_blocklabels(f, lad::LabelledUnitRangeDual) = dual(map_blocklabels(f, nondual(lad)))
+
 
 function nondual_type(
   ::Type{<:LabelledUnitRangeDual{<:Any,NondualUnitRange}}

@@ -354,3 +354,9 @@ function blockedunitrange_getindices(
   # if `a isa `GradedUnitRange`, for example.
   return mortar(blks, labelled_length.(blks))
 end
+
+map_blocklabels(::Any, a::AbstractUnitRange) = a
+function map_blocklabels(f, g::AbstractGradedUnitRange)
+  # use labelled_blocks to preserve GradedUnitRange
+  return labelled_blocks(unlabel_blocks(g), f.(blocklabels(g)))
+end

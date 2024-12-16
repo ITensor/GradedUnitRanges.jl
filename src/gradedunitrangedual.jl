@@ -27,9 +27,9 @@ end
 ## TODO: Define this to instantiate a dual unit range.
 ## materialize_dual(a::GradedUnitRangeDual) = materialize_dual(nondual(a))
 
-Base.first(a::GradedUnitRangeDual) = label_dual(first(nondual(a)))
-Base.last(a::GradedUnitRangeDual) = label_dual(last(nondual(a)))
-Base.step(a::GradedUnitRangeDual) = label_dual(step(nondual(a)))
+Base.first(a::GradedUnitRangeDual) = dual(first(nondual(a)))
+Base.last(a::GradedUnitRangeDual) = dual(last(nondual(a)))
+Base.step(a::GradedUnitRangeDual) = dual(step(nondual(a)))
 
 Base.view(a::GradedUnitRangeDual, index::Block{1}) = a[index]
 
@@ -40,7 +40,7 @@ function blockedunitrange_getindices(
 end
 
 function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::Integer)
-  return label_dual(getindex(nondual(a), indices))
+  return dual(getindex(nondual(a), indices))
 end
 
 function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::Block{1})
@@ -123,8 +123,8 @@ function Base.iterate(a::GradedUnitRangeDual, i)
 end
 
 BlockArrays.blockaxes(a::GradedUnitRangeDual) = blockaxes(nondual(a))
-BlockArrays.blockfirsts(a::GradedUnitRangeDual) = label_dual.(blockfirsts(nondual(a)))
-BlockArrays.blocklasts(a::GradedUnitRangeDual) = label_dual.(blocklasts(nondual(a)))
+BlockArrays.blockfirsts(a::GradedUnitRangeDual) = dual.(blockfirsts(nondual(a)))
+BlockArrays.blocklasts(a::GradedUnitRangeDual) = dual.(blocklasts(nondual(a)))
 function BlockArrays.findblock(a::GradedUnitRangeDual, index::Integer)
   return findblock(nondual(a), index)
 end
@@ -137,4 +137,8 @@ end
 
 function unlabel_blocks(a::GradedUnitRangeDual)
   return unlabel_blocks(nondual(a))
+end
+
+function map_blocklabels(f, g::GradedUnitRangeDual)
+  return dual(map_blocklabels(f, dual(g)))
 end
