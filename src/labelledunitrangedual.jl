@@ -1,3 +1,6 @@
+using LabelledNumbers:
+  LabelledNumbers, IsLabelled, LabelledUnitRange, label, label_type, unlabel
+
 # LabelledUnitRangeDual is obtained by slicing a GradedUnitRangeDual with a block
 
 struct LabelledUnitRangeDual{T,NondualUnitRange<:AbstractUnitRange{T}} <:

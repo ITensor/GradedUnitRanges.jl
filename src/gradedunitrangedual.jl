@@ -1,3 +1,6 @@
+using BlockArrays: BlockArrays, BlockIndexRange, BlockSlice, combine_blockaxes
+using LabelledNumbers: LabelledNumbers, LabelledUnitRange, label_type, unlabel
+
 struct GradedUnitRangeDual{
   T,BlockLasts,NondualUnitRange<:AbstractGradedUnitRange{T,BlockLasts}
 } <: AbstractGradedUnitRange{T,BlockLasts}

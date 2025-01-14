@@ -1,3 +1,6 @@
+using BlockArrays:
+  BlockArrays, AbstractBlockedUnitRange, BlockIndexRange, BlockSlice, block, blockindex
+
 # Custom `BlockedUnitRange` constructor that takes a unit range
 # and a set of block lengths, similar to `BlockArray(::AbstractArray, blocklengths...)`.
 function blockedunitrange(a::AbstractUnitRange, blocklengths)

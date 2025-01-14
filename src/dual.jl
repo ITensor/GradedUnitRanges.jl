@@ -1,3 +1,5 @@
+using LabelledNumbers: LabelledInteger, label, labelled, unlabel
+
 # default behavior: any object is self-dual
 dual(x) = x
 nondual(r::AbstractUnitRange) = r

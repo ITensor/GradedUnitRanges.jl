@@ -1,3 +1,5 @@
+using BlockArrays: BlockArrays
+
 # Represents the range `1:1` or `Base.OneTo(1)`.
 struct OneToOne{T} <: AbstractUnitRange{T} end
 OneToOne() = OneToOne{Bool}()
