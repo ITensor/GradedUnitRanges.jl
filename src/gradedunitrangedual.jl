@@ -1,4 +1,12 @@
-using BlockArrays: BlockArrays, BlockIndexRange, BlockSlice, combine_blockaxes
+using BlockArrays:
+  BlockArrays,
+  BlockIndex,
+  BlockIndexRange,
+  BlockSlice,
+  BlockVector,
+  blockaxes,
+  blockfirsts,
+  combine_blockaxes
 using LabelledNumbers: LabelledNumbers, LabelledUnitRange, label_type, unlabel
 
 struct GradedUnitRangeDual{

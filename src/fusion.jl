@@ -1,4 +1,4 @@
-using BlockArrays: AbstractBlockedUnitRange
+using BlockArrays: AbstractBlockedUnitRange, blocklengths
 using LabelledNumbers: LabelledInteger, label, labelled
 using SplitApplyCombine: groupcount
 

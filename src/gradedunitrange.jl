@@ -1,9 +1,18 @@
 using BlockArrays:
   BlockArrays,
   AbstractBlockedUnitRange,
+  Block,
   BlockIndexRange,
+  BlockRange,
   BlockSlice,
+  BlockedOneTo,
+  BlockedUnitRange,
   block,
+  blockedrange,
+  blockisequal,
+  blocklasts,
+  blocklength,
+  blocks,
   blockindex,
   combine_blockaxes,
   sortedunion
