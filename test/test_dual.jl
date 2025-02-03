@@ -187,6 +187,7 @@ end
     @test nondual_type(a) === typeof(a)
 
     @test isdual(ad)
+    @test isdual(only(axes(ad)))
     @test !isdual(a)
     @test axes(Base.Slice(a)) isa Tuple{typeof(a)}
     @test AbstractUnitRange{Int}(ad) == 1:5
