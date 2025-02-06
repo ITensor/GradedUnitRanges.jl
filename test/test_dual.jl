@@ -13,6 +13,7 @@ using BlockArrays:
   findblock,
   mortar,
   combine_blockaxes
+using BlockSparseArrays: BlockSparseArray
 using GradedUnitRanges:
   AbstractGradedUnitRange,
   GradedUnitRanges,
@@ -22,6 +23,7 @@ using GradedUnitRanges:
   blocklabels,
   blockmergesortperm,
   blocksortperm,
+  dag,
   dual,
   dual_type,
   flip,
@@ -53,6 +55,7 @@ Base.isless(c1::U1, c2::U1) = c1.n < c2.n
   af = flip(a)
   @test !isdual(a)
   @test !isdual(ad)
+  @test !isdual(dag(a))
   @test !isdual(af)
   @test ad isa UnitRange
   @test af isa UnitRange
@@ -99,6 +102,7 @@ end
   @test !labelled_isequal(la, lad)
   @test !space_isequal(la, lad)
   @test isdual(lad)
+  @test isdual(dag(la))
   @test nondual(lad) === la
   @test dual(lad) === la
   @test label_type(lad) === U1
@@ -187,6 +191,7 @@ end
     @test nondual_type(a) === typeof(a)
 
     @test isdual(ad)
+    @test isdual(dag(a))
     @test isdual(only(axes(ad)))
     @test !isdual(a)
     @test axes(Base.Slice(a)) isa Tuple{typeof(a)}
@@ -300,5 +305,17 @@ end
     @test !isdual(flip(ad))
     @test !isdual(dual(flip(a)))
   end
+end
+
+@testset "dag" begin
+  elt = ComplexF64
+  r = gradedrange([U1(0) => 2, U1(1) => 3])
+  a = BlockSparseArray{elt}(r, dual(r))
+  a[Block(1, 1)] = randn(elt, 2, 2)
+  a[Block(2, 2)] = randn(elt, 3, 3)
+  @test isdual.(axes(a)) == (false, true)
+  ad = dag(a)
+  @test Array(ad) == conj(Array(a))
+  @test isdual.(axes(ad)) == (true, false)
 end
 end
