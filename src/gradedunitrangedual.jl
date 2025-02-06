@@ -62,7 +62,7 @@ function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::BlockRange
   return dual(getindex(nondual(a), indices))
 end
 
-function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::BlockIndexRange)
+function blockedunitrange_getindices(a::GradedUnitRangeDual, indices::BlockIndexRange{1})
   return dual(nondual(a)[indices])
 end
 

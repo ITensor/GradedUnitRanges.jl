@@ -239,7 +239,9 @@ function blockedunitrange_getindices(a::AbstractGradedUnitRange, index)
   return labelled(unlabel_blocks(a)[index], get_label(a, index))
 end
 
-function blockedunitrange_getindices(a::AbstractGradedUnitRange, indices::BlockIndexRange)
+function blockedunitrange_getindices(
+  a::AbstractGradedUnitRange, indices::BlockIndexRange{1}
+)
   return a[block(indices)][only(indices.indices)]
 end
 
@@ -292,9 +294,11 @@ function Base.getindex(a::AbstractGradedUnitRange, index::Block{1})
   return blockedunitrange_getindices(a, index)
 end
 
-function Base.getindex(a::AbstractGradedUnitRange, indices::BlockIndexRange)
+function Base.getindex(a::AbstractGradedUnitRange, indices::BlockIndexRange{1})
   return blockedunitrange_getindices(a, indices)
 end
+
+#getindex(::GradedUnitRanges.AbstractGradedUnitRange, ::BlockArrays.BlockIndexRange{1, R, I} where {R<:Tuple{AbstractUnitRange{<:Integer}}, I<:Tuple{Integer}})
 
 # fix ambiguities
 function Base.getindex(
@@ -308,6 +312,7 @@ function Base.getindex(
   return blockedunitrange_getindices(a, indices)
 end
 
+# Fix ambiguity error with BlockArrays.jl.
 function Base.getindex(a::AbstractGradedUnitRange, indices::BlockIndex{1})
   return blockedunitrange_getindices(a, indices)
 end
@@ -320,6 +325,23 @@ end
 # getindex(::AbstractUnitRange, ::AbstractUnitRange{<:Integer})
 # ```
 function Base.getindex(a::AbstractGradedUnitRange, indices::BlockSlice)
+  return blockedunitrange_getindices(a, indices)
+end
+
+# Fix ambiguity error with BlockArrays.jl.
+function Base.getindex(a::AbstractGradedUnitRange, indices::AbstractVector{<:Block{1}})
+  return blockedunitrange_getindices(a, indices)
+end
+
+# Fix ambiguity error with BlockArrays.jl.
+function Base.getindex(
+  a::AbstractGradedUnitRange, indices::AbstractVector{<:BlockIndexRange{1}}
+)
+  return blockedunitrange_getindices(a, indices)
+end
+
+# Fix ambiguity error with BlockArrays.jl.
+function Base.getindex(a::AbstractGradedUnitRange, indices::AbstractVector{<:BlockIndex{1}})
   return blockedunitrange_getindices(a, indices)
 end
 
