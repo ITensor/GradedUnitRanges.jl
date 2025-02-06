@@ -33,7 +33,6 @@ dag(r::AbstractUnitRange) = dual(r)
 Complex conjugates `a` and takes the dual of the axes.
 """
 function dag(a::AbstractArray)
-  # TODO: Fix `similar(a, dual.(axes(a)))`.
   a′ = similar(a, dual.(axes(a)))
   a′ .= conj.(a)
   return a′
