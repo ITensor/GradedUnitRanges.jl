@@ -43,6 +43,9 @@ jobs:
             end
           end
           try
+            pwd()
+            readdir()
+            readdir("../downstream")
             Pkg.develop(PackageSpec(path="../downstream"))
             Pkg.test("MapBroadcast")
 
