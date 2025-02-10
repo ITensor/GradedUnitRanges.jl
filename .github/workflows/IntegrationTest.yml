@@ -47,6 +47,7 @@ jobs:
             @show readdir()
             @show readdir("downstream")
             @show readdir("test_downstream")
+            mkdir("test_downstream")
             cd("test_downstream")
             Pkg.develop(PackageSpec(path="../downstream"))
             Pkg.test("MapBroadcast")
