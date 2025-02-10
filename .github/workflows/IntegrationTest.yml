@@ -43,6 +43,7 @@ jobs:
             end
           end
           try
+            Pkg.develop(PackageSpec(path="../downstream"))
             Pkg.test("MapBroadcast")
 
             ## # force it to use this PR's version of the package
