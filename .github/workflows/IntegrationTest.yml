@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    name: ITensor/BlockSparseArrays
+    name: ITensor/BlockSparseArrays.jl
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -28,7 +28,7 @@ jobs:
       - name: Clone Downstream
         uses: actions/checkout@v4
         with:
-          repository: ITensor/BlockSparseArrays
+          repository: ITensor/BlockSparseArrays.jl
           path: downstream
       - name: Load this and run the downstream tests
         shell: julia --color=yes --project=downstream {0}
