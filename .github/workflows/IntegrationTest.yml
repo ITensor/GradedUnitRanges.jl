@@ -5,7 +5,11 @@ on:
     branches:
       - 'main'
     tags: '*'
+    paths:
+      - 'Project.toml'
   pull_request:
+    paths:
+      - 'Project.toml'
 
 jobs:
   integration-test:
@@ -17,5 +21,5 @@ jobs:
            - 'ITensor/SymmetrySectors.jl'
     uses: "ITensor/ITensorActions/.github/workflows/IntegrationTest.yml@main"
     with:
-      local-registry-urls: "https://github.com/ITensor/ITensorRegistry.git"
+      localregistry: "https://github.com/ITensor/ITensorRegistry.git"
       repo: "${{ matrix.repo }}"
