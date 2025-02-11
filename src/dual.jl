@@ -8,17 +8,20 @@ By default, it just returns `x`, i.e. it assumes the object
 is self-dual.
 """
 dual(x) = x
+isdual(x) = isdual(typeof(x))
+isdual(::Type) = false
 
-nondual(r::AbstractUnitRange) = r
-isdual(::AbstractUnitRange) = false
-
-dual_type(x) = dual_type(typeof(x))
 dual_type(T::Type) = T
-nondual_type(x) = nondual_type(typeof(x))
-nondual_type(T::Type) = T
+nondual_type(T::Type) = isdual(T) ? dual_type(T) : T
+nondual(r::AbstractUnitRange) = map_blocklabels(nondual, r)
+isdual(R::Type{<:AbstractUnitRange}) = isdual(eltype(R))
+isdual(L::Type{<:LabelledInteger}) = isdual(label_type(L))
 
 dual(i::LabelledInteger) = labelled(unlabel(i), dual(label(i)))
-flip(a::AbstractUnitRange) = dual(map_blocklabels(dual, a))
+dual(a::AbstractUnitRange) = map_blocklabels(dual, a)
+flip(a::AbstractUnitRange) = map_blocklabels(flip, a)
+
+flip_dual(x) = isdual(x) ? flip(x) : x
 
 """
     dag(r::AbstractUnitRange)

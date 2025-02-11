@@ -19,7 +19,7 @@ using GradedUnitRanges:
   blocklabels,
   gradedrange,
   sector_type,
-  space_isequal
+  labelled_isequal
 using LabelledNumbers:
   LabelledUnitRange, islabelled, label, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
@@ -110,7 +110,7 @@ end
     b = combine_blockaxes(a, a)
     @test b isa GradedOneTo
     @test b == 1:5
-    @test space_isequal(b, a)
+    @test labelled_isequal(b, a)
   end
 
   # Slicing operations

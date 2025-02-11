@@ -9,6 +9,7 @@ using BlockArrays:
   BlockedUnitRange,
   block,
   blockedrange,
+  blockfirsts,
   blockisequal,
   blocklasts,
   blocklength,
@@ -72,10 +73,6 @@ function LabelledNumbers.labelled_isequal(a1::AbstractUnitRange, a2::AbstractUni
   return blockisequal(a1, a2) && (blocklabels(a1) == blocklabels(a2))
 end
 
-function space_isequal(a1::AbstractUnitRange, a2::AbstractUnitRange)
-  return (isdual(a1) == isdual(a2)) && labelled_isequal(a1, a2)
-end
-
 # needed in BlockSparseArrays
 function Base.AbstractUnitRange{T}(
   a::AbstractGradedUnitRange{<:LabelledInteger{T}}
@@ -89,8 +86,9 @@ LabelledNumbers.label_type(g::AbstractGradedUnitRange) = label_type(typeof(g))
 LabelledNumbers.label_type(T::Type{<:AbstractGradedUnitRange}) = label_type(eltype(T))
 
 sector_type(x) = sector_type(typeof(x))
-sector_type(T::Type) = error("Not implemented")
-sector_type(T::Type{<:AbstractUnitRange}) = label_type(T)
+sector_type(::Type) = error("Not implemented")
+sector_type(T::Type{<:AbstractUnitRange}) = sector_type(eltype(T))
+sector_type(T::Type{<:LabelledInteger}) = nondual_type(label_type(T))
 
 function gradedrange(lblocklengths::AbstractVector{<:LabelledInteger})
   brange = blockedrange(unlabel.(lblocklengths))
