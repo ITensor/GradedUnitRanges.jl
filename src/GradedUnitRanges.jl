@@ -10,4 +10,7 @@ include("gradedunitrangedual.jl")
 include("onetoone.jl")
 include("fusion.jl")
 
+include("sectorunitrange.jl")
+include("newgradedunitrange.jl")
+
 end
