@@ -83,32 +83,33 @@ function Base.AbstractUnitRange{T}(
   return unlabel_blocks(a)
 end
 
+function Base.last(a::AbstractGradedUnitRange)
+  return isempty(a.lasts) ? labelled(first(a) - 1, label(first(a))) : last(a.lasts)
+end
+
 # TODO: Use `TypeParameterAccessors`.
 Base.eltype(::Type{<:GradedUnitRange{T}}) where {T} = T
 LabelledNumbers.label_type(g::AbstractGradedUnitRange) = label_type(typeof(g))
 LabelledNumbers.label_type(T::Type{<:AbstractGradedUnitRange}) = label_type(eltype(T))
 
+to_sector(x) = x
+
 sector_type(x) = sector_type(typeof(x))
 sector_type(T::Type) = error("Not implemented")
 sector_type(T::Type{<:AbstractUnitRange}) = label_type(T)
-
-function gradedrange(lblocklengths::AbstractVector{<:LabelledInteger})
-  brange = blockedrange(unlabel.(lblocklengths))
-  lblocklasts = labelled.(blocklasts(brange), label.(lblocklengths))
-  return GradedOneTo(lblocklasts)
-end
 
 # To help with generic code.
 function BlockArrays.blockedrange(lblocklengths::AbstractVector{<:LabelledInteger})
   return gradedrange(lblocklengths)
 end
 
-function Base.last(a::AbstractGradedUnitRange)
-  return isempty(a.lasts) ? labelled(first(a) - 1, label(first(a))) : last(a.lasts)
-end
-
 function gradedrange(lblocklengths::AbstractVector{<:Pair{<:Any,<:Integer}})
   return gradedrange(labelled.(last.(lblocklengths), first.(lblocklengths)))
+end
+function gradedrange(lblocklengths::AbstractVector{<:LabelledInteger})
+  brange = blockedrange(unlabel.(lblocklengths))
+  lblocklasts = labelled.(blocklasts(brange), to_sector.(label.(lblocklengths)))
+  return GradedOneTo(lblocklasts)
 end
 
 function labelled_blocks(a::BlockedOneTo, labels)
