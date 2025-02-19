@@ -15,7 +15,6 @@ function tensor_product(
 end
 
 flip_dual(r::AbstractUnitRange) = r
-flip_dual(r::GradedUnitRangeDual) = flip(r)
 function tensor_product(a1::AbstractUnitRange, a2::AbstractUnitRange)
   return tensor_product(flip_dual(a1), flip_dual(a2))
 end
@@ -93,7 +92,6 @@ function blockmergesort(g::AbstractGradedUnitRange)
   return gradedrange(new_blocklengths)
 end
 
-blockmergesort(g::GradedUnitRangeDual) = flip(blockmergesort(flip(g)))
 blockmergesort(g::AbstractUnitRange) = g
 
 # fusion_product produces a sorted, non-dual GradedUnitRange
@@ -102,7 +100,6 @@ function fusion_product(g1, g2)
 end
 
 fusion_product(g::AbstractUnitRange) = blockmergesort(g)
-fusion_product(g::GradedUnitRangeDual) = fusion_product(flip(g))
 
 # recursive fusion_product. Simpler than reduce + fix type stability issues with reduce
 function fusion_product(g1, g2, g3...)

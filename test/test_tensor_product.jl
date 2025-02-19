@@ -11,7 +11,7 @@ using GradedUnitRanges:
   fusion_product,
   flip,
   gradedrange,
-  space_isequal,
+  labelled_isequal,
   isdual,
   tensor_product
 
@@ -70,19 +70,19 @@ end
   b = fusion_product(ad)
   @test b isa GradedOneTo
   @test !isdual(b)
-  @test space_isequal(b, gradedrange([U1(-2) => 3, U1(-1) => 2]))
+  @test labelled_isequal(b, gradedrange([U1(-2) => 3, U1(-1) => 2]))
 
   c = fusion_product(ad, ad)
   @test c isa GradedOneTo
   @test !isdual(c)
-  @test space_isequal(c, gradedrange([U1(-4) => 9, U1(-3) => 12, U1(-2) => 4]))
+  @test labelled_isequal(c, gradedrange([U1(-4) => 9, U1(-3) => 12, U1(-2) => 4]))
 
   d = fusion_product(ad, a)
   @test !isdual(d)
-  @test space_isequal(d, gradedrange([U1(-1) => 6, U1(0) => 13, U1(1) => 6]))
+  @test labelled_isequal(d, gradedrange([U1(-1) => 6, U1(0) => 13, U1(1) => 6]))
 
   e = fusion_product(a, ad)
   @test !isdual(d)
-  @test space_isequal(e, d)
+  @test labelled_isequal(e, d)
 end
 end

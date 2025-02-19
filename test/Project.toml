@@ -7,6 +7,7 @@ LabelledNumbers = "f856a3a6-4152-4ec4-b2a7-02c1a55d7993"
 SafeTestsets = "1bc83da4-3b8d-516f-aca4-4fe02f6d838f"
 Suppressor = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+TypeParameterAccessors = "7e5a90cf-f82e-492e-a09b-e3e26432c138"
 
 [compat]
 Aqua = "0.8.9"
