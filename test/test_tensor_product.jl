@@ -1,4 +1,3 @@
-@eval module $(gensym())
 using Test: @test, @testset
 
 using BlockArrays: blocklength, blocklengths
@@ -115,5 +114,4 @@ end
     @test !isdual(d)
     @test space_isequal(e, d)
   end
-end
 end
