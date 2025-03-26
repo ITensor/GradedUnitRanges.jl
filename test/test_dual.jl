@@ -1,4 +1,3 @@
-@eval module $(gensym())
 using BlockArrays:
   Block,
   BlockedOneTo,
@@ -19,7 +18,6 @@ using GradedUnitRanges:
   GradedUnitRanges,
   GradedUnitRangeDual,
   LabelledUnitRangeDual,
-  OneToOne,
   blocklabels,
   blockmergesortperm,
   blocksortperm,
@@ -36,6 +34,8 @@ using GradedUnitRanges:
 using LabelledNumbers:
   LabelledInteger, LabelledUnitRange, label, label_type, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
+using TensorProducts: OneToOne, tensor_product
+
 struct U1
   n::Int
 end
@@ -317,5 +317,4 @@ end
   ad = dag(a)
   @test Array(ad) == conj(Array(a))
   @test isdual.(axes(ad)) == (true, false)
-end
 end

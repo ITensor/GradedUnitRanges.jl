@@ -1,40 +1,10 @@
 using BlockArrays: AbstractBlockedUnitRange, blocklengths
 using LabelledNumbers: LabelledInteger, label, labelled
 using SplitApplyCombine: groupcount
-
-# https://github.com/ITensor/ITensors.jl/blob/v0.3.57/NDTensors/src/lib/GradedAxes/src/tensor_product.jl
-# https://en.wikipedia.org/wiki/Tensor_product
-# https://github.com/KeitaNakamura/Tensorial.jl
-function tensor_product(
-  a1::AbstractUnitRange,
-  a2::AbstractUnitRange,
-  a3::AbstractUnitRange,
-  a_rest::Vararg{AbstractUnitRange},
-)
-  return foldl(tensor_product, (a1, a2, a3, a_rest...))
-end
+using TensorProducts: TensorProducts, tensor_product
 
 flip_dual(r::AbstractUnitRange) = r
 flip_dual(r::GradedUnitRangeDual) = flip(r)
-function tensor_product(a1::AbstractUnitRange, a2::AbstractUnitRange)
-  return tensor_product(flip_dual(a1), flip_dual(a2))
-end
-
-function tensor_product(a1::Base.OneTo, a2::Base.OneTo)
-  return Base.OneTo(length(a1) * length(a2))
-end
-
-function tensor_product(::OneToOne, a2::AbstractUnitRange)
-  return a2
-end
-
-function tensor_product(a1::AbstractUnitRange, ::OneToOne)
-  return a1
-end
-
-function tensor_product(::OneToOne, ::OneToOne)
-  return OneToOne()
-end
 
 function fuse_labels(x, y)
   return error(
@@ -42,17 +12,14 @@ function fuse_labels(x, y)
   )
 end
 
-function fuse_blocklengths(x::Integer, y::Integer)
-  # return blocked unit range to keep non-abelian interface
-  return blockedrange([x * y])
-end
-
 function fuse_blocklengths(x::LabelledInteger, y::LabelledInteger)
   # return blocked unit range to keep non-abelian interface
   return blockedrange([labelled(x * y, fuse_labels(label(x), label(y)))])
 end
 
-function tensor_product(a1::AbstractBlockedUnitRange, a2::AbstractBlockedUnitRange)
+function TensorProducts.tensor_product(
+  a1::AbstractGradedUnitRange, a2::AbstractGradedUnitRange
+)
   nested = map(Iterators.flatten((Iterators.product(blocks(a1), blocks(a2)),))) do it
     return mapreduce(length, fuse_blocklengths, it)
   end

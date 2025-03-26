@@ -6,16 +6,14 @@ using BlockArrays: blocklength, blocklengths
 using GradedUnitRanges:
   GradedUnitRanges,
   GradedOneTo,
-  OneToOne,
   dual,
   fusion_product,
   flip,
   gradedrange,
   space_isequal,
-  isdual,
-  tensor_product
-
+  isdual
 using LabelledNumbers: labelled_isequal
+using TensorProducts: OneToOne, tensor_product
 
 struct U1
   n::Int
@@ -26,10 +24,6 @@ GradedUnitRanges.fuse_labels(x::U1, y::U1) = U1(x.n + y.n)
 
 @testset "GradedUnitRanges.tensor_product" begin
   GradedUnitRanges.fuse_labels(x::String, y::String) = x * y
-
-  g0 = OneToOne()
-  @test labelled_isequal(g0, g0)
-  @test labelled_isequal(tensor_product(g0, g0), g0)
 
   a = gradedrange(["x" => 2, "y" => 3])
   b = tensor_product(a, a)

@@ -1,4 +1,3 @@
-@eval module $(gensym())
 using BlockArrays:
   Block,
   BlockRange,
@@ -13,34 +12,13 @@ using BlockArrays:
   combine_blockaxes,
   mortar
 using GradedUnitRanges:
-  GradedOneTo,
-  GradedUnitRange,
-  OneToOne,
-  blocklabels,
-  gradedrange,
-  sector_type,
-  space_isequal
+  GradedOneTo, GradedUnitRange, blocklabels, gradedrange, sector_type, space_isequal
 using LabelledNumbers:
   LabelledUnitRange, islabelled, label, labelled, labelled_isequal, unlabel
 using Test: @test, @test_broken, @testset
 
-@testset "OneToOne" begin
-  a0 = OneToOne()
-  @test a0 isa OneToOne{Bool}
-  @test eltype(a0) == Bool
-  @test length(a0) == 1
-  @test labelled_isequal(a0, a0)
-  @test a0[1] == true
-  @test a0[[1]] == [true]
-
-  @test labelled_isequal(a0, 1:1)
-  @test labelled_isequal(1:1, a0)
-  @test !labelled_isequal(a0, 1:2)
-  @test !labelled_isequal(1:2, a0)
-end
-
 @testset "GradedUnitRanges basics" begin
-  a0 = OneToOne()
+  a0 = Base.OneTo(1)
   for a in (
     blockedrange([labelled(2, "x"), labelled(3, "y")]),
     gradedrange([labelled(2, "x"), labelled(3, "y")]),
@@ -259,5 +237,4 @@ end
   a = x[I]
   @test length(a) == 1
   @test label(first(a)) == "x"
-end
 end
