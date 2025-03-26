@@ -1,7 +1,7 @@
 using BlockArrays: AbstractBlockedUnitRange, blocklengths
 using LabelledNumbers: LabelledInteger, label, labelled
 using SplitApplyCombine: groupcount
-using TensorProducts: TensorProducts, tensor_product
+using TensorProducts: OneToOne, TensorProducts, tensor_product
 
 flip_dual(r::AbstractUnitRange) = r
 flip_dual(r::GradedUnitRangeDual) = flip(r)
@@ -64,14 +64,26 @@ blockmergesort(g::GradedUnitRangeDual) = flip(blockmergesort(flip(g)))
 blockmergesort(g::AbstractUnitRange) = g
 
 # fusion_product produces a sorted, non-dual GradedUnitRange
+fusion_product() = OneToOne()
+
+fusion_product(g::AbstractUnitRange) = blockmergesort(flip_dual(g))
+
 function fusion_product(g1, g2)
   return blockmergesort(tensor_product(g1, g2))
 end
 
-fusion_product(g::AbstractUnitRange) = blockmergesort(g)
-fusion_product(g::GradedUnitRangeDual) = fusion_product(flip(g))
+# fusing with OneToOne preserves labels
+fusion_product(::OneToOne, ::OneToOne) = fusion_product()
+fusion_product(a, ::OneToOne) = fusion_product(a)
+fusion_product(::OneToOne, a) = fusion_product(a)
 
 # recursive fusion_product. Simpler than reduce + fix type stability issues with reduce
 function fusion_product(g1, g2, g3...)
   return fusion_product(fusion_product(g1, g2), g3...)
+end
+
+# ⊗ is defined as fusion_product for GradedUnitRanges
+TensorProducts.:⊗(a1::AbstractGradedUnitRange) = fusion_product(a1)
+function TensorProducts.:⊗(a1::AbstractGradedUnitRange, a2::AbstractGradedUnitRange)
+  return fusion_product(a1, a2)
 end
