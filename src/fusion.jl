@@ -1,7 +1,7 @@
 using BlockArrays: AbstractBlockedUnitRange, blocklengths
 using LabelledNumbers: LabelledInteger, label, labelled
 using SplitApplyCombine: groupcount
-using TensorProducts: OneToOne, TensorProducts, tensor_product
+using TensorProducts: TensorProducts, OneToOne, tensor_product
 
 flip_dual(r::AbstractUnitRange) = r
 flip_dual(r::GradedUnitRangeDual) = flip(r)
