@@ -17,9 +17,14 @@ function fuse_blocklengths(x::LabelledInteger, y::LabelledInteger)
   return blockedrange([labelled(x * y, fuse_labels(label(x), label(y)))])
 end
 
-function TensorProducts.tensor_product(
-  a1::AbstractGradedUnitRange, a2::AbstractGradedUnitRange
-)
+unmerged_tensor_product() = OneToOne()
+unmerged_tensor_product(a) = a
+unmerged_tensor_product(a1, a2) = tensor_product(a1, a2)
+function unmerged_tensor_product(a1, a2, as...)
+  return unmerged_tensor_product(unmerged_tensor_product(a1, a2), as...)
+end
+
+function unmerged_tensor_product(a1::AbstractGradedUnitRange, a2::AbstractGradedUnitRange)
   nested = map(Iterators.flatten((Iterators.product(blocks(a1), blocks(a2)),))) do it
     return mapreduce(length, fuse_blocklengths, it)
   end
@@ -63,27 +68,11 @@ end
 blockmergesort(g::GradedUnitRangeDual) = flip(blockmergesort(flip(g)))
 blockmergesort(g::AbstractUnitRange) = g
 
-# fusion_product produces a sorted, non-dual GradedUnitRange
-fusion_product() = OneToOne()
+# tensor_product produces a sorted, non-dual GradedUnitRange
+TensorProducts.tensor_product(g::AbstractGradedUnitRange) = blockmergesort(flip_dual(g))
 
-fusion_product(g::AbstractUnitRange) = blockmergesort(flip_dual(g))
-
-function fusion_product(g1, g2)
-  return blockmergesort(tensor_product(g1, g2))
-end
-
-# fusing with OneToOne preserves labels
-fusion_product(::OneToOne, ::OneToOne) = fusion_product()
-fusion_product(a, ::OneToOne) = fusion_product(a)
-fusion_product(::OneToOne, a) = fusion_product(a)
-
-# recursive fusion_product. Simpler than reduce + fix type stability issues with reduce
-function fusion_product(g1, g2, g3...)
-  return fusion_product(fusion_product(g1, g2), g3...)
-end
-
-# ⊗ is defined as fusion_product for GradedUnitRanges
-TensorProducts.:⊗(a1::AbstractGradedUnitRange) = fusion_product(a1)
-function TensorProducts.:⊗(a1::AbstractGradedUnitRange, a2::AbstractGradedUnitRange)
-  return fusion_product(a1, a2)
+function TensorProducts.tensor_product(
+  g1::AbstractGradedUnitRange, g2::AbstractGradedUnitRange
+)
+  return blockmergesort(unmerged_tensor_product(g1, g2))
 end
