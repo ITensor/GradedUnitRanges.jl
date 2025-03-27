@@ -27,6 +27,7 @@ a0 = gradedrange([U1(1) => 1, U1(2) => 3, U1(1) => 1])
   GradedUnitRanges.fuse_labels(x::String, y::String) = x * y
 
   @test unmerged_tensor_product() isa OneToOne
+  @test unmerged_tensor_product(OneToOne(), OneToOne()) isa OneToOne
 
   a = gradedrange(["x" => 2, "y" => 3])
   @test labelled_isequal(unmerged_tensor_product(a), a)

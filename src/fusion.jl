@@ -21,6 +21,7 @@ unmerged_tensor_product() = OneToOne()
 unmerged_tensor_product(a) = a
 unmerged_tensor_product(a, ::OneToOne) = a
 unmerged_tensor_product(::OneToOne, a) = a
+unmerged_tensor_product(::OneToOne, ::OneToOne) = OneToOne()
 unmerged_tensor_product(a1, a2) = tensor_product(a1, a2)
 function unmerged_tensor_product(a1, a2, as...)
   return unmerged_tensor_product(unmerged_tensor_product(a1, a2), as...)
