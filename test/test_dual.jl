@@ -12,7 +12,6 @@ using BlockArrays:
   findblock,
   mortar,
   combine_blockaxes
-using BlockSparseArrays: BlockSparseArray
 using GradedUnitRanges:
   AbstractGradedUnitRange,
   GradedUnitRanges,
@@ -305,16 +304,4 @@ end
     @test !isdual(flip(ad))
     @test !isdual(dual(flip(a)))
   end
-end
-
-@testset "dag" begin
-  elt = ComplexF64
-  r = gradedrange([U1(0) => 2, U1(1) => 3])
-  a = BlockSparseArray{elt}(undef, r, dual(r))
-  a[Block(1, 1)] = randn(elt, 2, 2)
-  a[Block(2, 2)] = randn(elt, 3, 3)
-  @test isdual.(axes(a)) == (false, true)
-  ad = dag(a)
-  @test Array(ad) == conj(Array(a))
-  @test isdual.(axes(ad)) == (true, false)
 end
