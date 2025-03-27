@@ -6,6 +6,6 @@ Literate = "98b081ad-f1c9-55d3-8b20-4c87d4299306"
 
 [compat]
 Documenter = "1.8.1"
-GradedUnitRanges = "0.1.6"
+GradedUnitRanges = "0.2"
 LabelledNumbers = "0.1.0"
 Literate = "2.20.1"
