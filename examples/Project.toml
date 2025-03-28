@@ -3,5 +3,5 @@ GradedUnitRanges = "e2de450a-8a67-46c7-b59c-01d5a3d041c5"
 LabelledNumbers = "f856a3a6-4152-4ec4-b2a7-02c1a55d7993"
 
 [compat]
-GradedUnitRanges = "0.1.6"
+GradedUnitRanges = "0.1.6, 0.2"
 LabelledNumbers = "0.1.0"
